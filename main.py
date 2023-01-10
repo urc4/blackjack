@@ -35,7 +35,7 @@ while game_on:
       dealer.add_cards(new_deck.deal_one())
    
    player.print_cards()
-   dealer.show_first_card()
+   dealer.print_cards(1)
 
    # Choose to hit or to stay
    player_hand = lgc.hand_value(player)
@@ -50,7 +50,7 @@ while game_on:
    while choice == 'h' and val_hand == True:
       player.add_cards(new_deck.deal_one())
       player.print_cards()
-      dealer.show_first_card()
+      dealer.print_cards(1)
       choice = lgc.player_choice(player)
       player_hand = lgc.hand_value(player)
       val_hand = lgc.valid_hand(player_hand)
@@ -82,6 +82,6 @@ while game_on:
       player.deposit(bet_amt)
    else:
       pass
-
+#this looks out of place and it doesnt work...why?
 game_on = lgc.gameon(player)
    

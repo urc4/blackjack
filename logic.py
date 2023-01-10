@@ -39,11 +39,11 @@ def hand_value(player):
    for card in player.all_cards:
       if card.rank == 'Ace':
          choice = 'wrong'
-         while choice not in [1,11]:
-            choice = input(f'Choose ', card, 'to be one(1) or eleven(11): ')
-         if choice not in [1,11]:
+         while choice not in ['1','11']:
+            choice = input(f'Choose {card} to be one(1) or eleven(11): ')
+         if choice not in ['1','11']:
             print('Pick a valid choice. Please try again.')
-         hand_value += choice
+         hand_value += int(choice)
       else:
          hand_value += card.value
    return hand_value
