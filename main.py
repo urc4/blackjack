@@ -21,7 +21,7 @@ while game_on:
    round_count += 1
    # Check if players can bet
    # We assume the dealer has an infinite amount of chatter (or not).
-   if player.balance < 0:
+   if player.balance <= 0:
       end ='-'*50
       print(f'\n{player.name} has run out of money. Game over, mf.\n{end}')
       game_on = False
@@ -53,22 +53,24 @@ while game_on:
    # Maybe can introduce this to while loop down below
    if val_hand == False:
       game_on = lgc.gameon(player.name)
-      break
+      continue
 
 
    choice = lgc.player_choice(player.name)
-   while choice == 'h' and val_hand == True:
+   while choice == 'h' and val_hand:
       player.add_cards(new_deck.deal_one())
       player.print_cards()
       dealer.print_cards(1)
-      choice = lgc.player_choice(player.name)
       player_hand = player.hand_value()
       val_hand = lgc.valid_hand(player_hand,player.name)
+      if val_hand == False:
+         continue
+      choice = lgc.player_choice(player.name)
 
    if val_hand == False:
       print(f'{player.name} you have lost your bet\n{dealer.name} keeps it.')
       game_on = lgc.gameon(player.name)
-      break
+      continue
 
 
    player.print_cards()
@@ -88,15 +90,15 @@ while game_on:
       player.deposit(bet_amt*1.5)
       print(f'Congrats, {player.name}!\nYou have earned ${bet_amt*1.5}')
       game_on = lgc.gameon(player.name)
-      break
+      continue
    elif player_hand == dealer_hand:
       player.deposit(bet_amt)
       print(f'It is a two way tie.\nTake back your bet of ${bet_amt}')
       game_on = lgc.gameon(player.name)
-      break
+      continue
    else:
       print(f'{player.name} you have lost your bet\n{dealer.name} keeps it.')
       game_on = lgc.gameon(player.name)
-      break
+      continue
    
    
