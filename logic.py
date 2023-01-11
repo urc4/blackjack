@@ -1,18 +1,19 @@
 def player_bet(player):
    
-   bet = 'wrong'
+   bet_amt = 'wrong'
    print(f'{player.name} has ${player.balance}')
    
-   while bet.isdigit() == False or int(bet) > player.balance:
+   while bet_amt.isdigit() == False or int(bet_amt) > player.balance:
       
-      bet = input(f'\n{player.name} place your bet for this round: $')
+      bet_amt = input(f'\n{player.name}, place your bet for this round: $')
 
-      if bet.isdigit() == False:
+      if bet_amt.isdigit() == False:
          print('Enter a valid amount. Please try again.')
-      if int(bet) > player.balance:
-         print('Your bet can not top your balance. Please try again.')
+      if int(bet_amt) > player.balance:
+         print(f'Your bet of ${bet_amt} can not top your balance of ${player.balance}')
+         print('Please enter a valid amount.')
 
-   return int(bet)
+   return int(bet_amt)
 
 def player_choice(player):
    choice = 'wrong'
@@ -34,19 +35,27 @@ def valid_hand(hand_value):
 
 # Could make the game automatically take in and understand the player's mind!!!
 # instead of asking for him to choose between one or eleven
-def hand_value(player):
+def hand_value(jock):
    hand_value = 0
-   for card in player.all_cards:
+   ace_count = 0
+   
+   for card in jock.all_cards:
       if card.rank == 'Ace':
-         choice = 'wrong'
-         while choice not in ['1','11']:
-            choice = input(f'Choose {card} to be one(1) or eleven(11): ')
-         if choice not in ['1','11']:
-            print('Pick a valid choice. Please try again.')
-         hand_value += int(choice)
+         ace_count += 1
       else:
          hand_value += card.value
-   return hand_value
+   
+   if ace_count == 0:
+      return hand_value
+   else:
+      possible_hand_values = [hand_value]*(ace_count+1)
+      for index in range(ace_count+1):
+         possible_hand_values[index] += (ace_count-index)*1 + index*11
+      best_hand = min(possible_hand_values)
+      for index in range(1,ace_count+1):
+         if possible_hand_values[index] <= 21:
+            best_hand = possible_hand_values[index]
+      return best_hand
 
 
 def gameon(player):

@@ -32,9 +32,9 @@ class Deck:
    def deal_one(self):
       return self.all_cards.pop()
       
-# Create a player class
+# Create a jock class that preceeds both player and dealer classes
 
-class Jock : # should I make acces to all_cards private
+class Jock : # should I make acces to all_cards private?
    
    def __init__(self):
       self.all_cards = []
@@ -52,9 +52,7 @@ class Jock : # should I make acces to all_cards private
    # Can i change this for __str__ function but vas to return string type
    def print_cards(self, number_cards = 10):
       if number_cards == 1:
-         print(f'\n{self.name} has\n')
-         print('\t', self.all_cards[0])
-         print('\t   ?')
+         print(f'\n{self.name} has\n\t{self.all_cards[0]}\t   ?')
       else:
          print(f'\n{self.name} has\n')
          for card in self.all_cards:

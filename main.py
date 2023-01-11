@@ -1,7 +1,12 @@
 import classes as cs
 import logic as lgc
 
+#How can I introduce the ability for multiple players
+#to play at once, maybe a dictionary...
+
 # Game logic alltogether
+#name = input('Player name: ')
+#balance = int(input('Initial balance: '))
 
 player = cs.Player()
 dealer = cs.Dealer()
@@ -12,14 +17,16 @@ round_count = 0
 while game_on:
    round_count += 1
    # Check if players can bet
-   # We assume the dealer has an infinite amount of chatter.
+   # We assume the dealer has an infinite amount of chatter (or not).
    if player.balance < 0:
-      print(f'{player.name} has run out of money. Game over, mf.')
+      end ='-'*50
+      print(f'\n{player.name} has run out of money. Game over, mf.\n{end}')
       game_on = False
       break
 
    # Start a new round
-   print(f'\nRound {round_count}\n')
+   round_boundary = '-'*40
+   print(f'\n{round_boundary} Round {round_count} {round_boundary}\n')
    new_deck = cs.Deck()
    new_deck.shuffle()
    player.clear_hand()
@@ -83,5 +90,5 @@ while game_on:
    else:
       pass
 #this looks out of place and it doesnt work...why?
-game_on = lgc.gameon(player)
+   game_on = lgc.gameon(player)
    
