@@ -52,7 +52,7 @@ class Jock : # should I make acces to all_cards private?
    # Can i change this for __str__ function but vas to return string type
    def print_cards(self, number_cards = 10):
       if number_cards == 1:
-         print(f'\n{self.name} has\n\t{self.all_cards[0]}\t   ?')
+         print(f'\n{self.name} has\n\t{self.all_cards[0]}\n\t      ?')
       else:
          print(f'\n{self.name} has\n')
          for card in self.all_cards:
@@ -60,7 +60,11 @@ class Jock : # should I make acces to all_cards private?
          print('\n')
 
 # watch out for naming differetn obejct types and functions with the same names
+# Could make the game automatically take in and understand the player's mind!!!
+# instead of asking for him to choose between one or eleven
 
+#player hand value function has to be different from dealers, maybe 
+#could turn this into a method for the classes previously determined
 class Player(Jock):
   
    def __init__(self, name = 'Player', balance = 100):
@@ -78,6 +82,29 @@ class Player(Jock):
       else:
          print(f'Your bet of ${bet_amt} can not top your balance of ${self.balance}')
 
+   def hand_value(self):
+      hand_value = 0
+      ace_count = 0
+   
+      for card in self.all_cards:
+         if card.rank == 'Ace':
+            ace_count += 1
+         else:
+            hand_value += card.value
+   
+      if ace_count == 0:
+         return hand_value
+     
+      else:
+         possible_hand_values = [hand_value]*(ace_count+1)
+         for index in range(ace_count+1):
+            possible_hand_values[index] += (ace_count-index)*1 + index*11
+         best_hand = min(possible_hand_values)
+         for index in range(1,ace_count+1):
+            if possible_hand_values[index] <= 21:
+               best_hand = possible_hand_values[index]
+
+         return best_hand
 # Dealer has to hit until they have at least 17
 # Could add inhertiance to player and dealer so as to have same fucntions
 class Dealer(Jock):
@@ -87,6 +114,29 @@ class Dealer(Jock):
       self.name = 'Dealer'
       self.balance = balance
    
+   def hand_value(self):
+      hand_value = 0
+      ace_count = 0
+   
+      for card in self.all_cards:
+         if card.rank == 'Ace':
+            ace_count += 1
+         else:
+            hand_value += card.value
+   
+      if ace_count == 0:
+         return hand_value
+     
+      else:
+         possible_hand_values = [hand_value]*(ace_count+1)
+         for index in range(ace_count+1):
+            possible_hand_values[index] += (ace_count-index)*1 + index*11
+         best_hand = min(possible_hand_values)
+         for index in range(1,ace_count+1):
+            if 17 <= possible_hand_values[index] <= 21:
+               best_hand = possible_hand_values[index]
+               
+         return best_hand
 
 
 

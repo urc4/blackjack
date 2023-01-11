@@ -1,3 +1,7 @@
+# Do I need to import classes here? Hopefully not, cause it works the way it is
+
+# Maybe could potentially remove player as argument and instead just give 
+# out its attributes needed for the funcion. Can I use kwargs?
 def player_bet(player):
    
    bet_amt = 'wrong'
@@ -15,54 +19,29 @@ def player_bet(player):
 
    return int(bet_amt)
 
-def player_choice(player):
+def player_choice(name):
    choice = 'wrong'
    # hit requests an extra card and stay the opposite
    while choice not in ['h','s']:
-      choice = input(f'{player.name} choose to hit(h) or stay(s): ')
+      choice = input(f'{name} choose to hit(h) or stay(s): ')
       if choice not in ['h','s']:
          print('Pick a valid choice. Please try again.')
 
    return choice
 
-def valid_hand(hand_value):
+def valid_hand(hand_value,name):
    if hand_value > 21:
-      print('BUST!')
+      print(f'{name}, it is a BUST!')
       return False
    else: 
       return True
 
 
-# Could make the game automatically take in and understand the player's mind!!!
-# instead of asking for him to choose between one or eleven
-def hand_value(jock):
-   hand_value = 0
-   ace_count = 0
-   
-   for card in jock.all_cards:
-      if card.rank == 'Ace':
-         ace_count += 1
-      else:
-         hand_value += card.value
-   
-   if ace_count == 0:
-      return hand_value
-   else:
-      possible_hand_values = [hand_value]*(ace_count+1)
-      for index in range(ace_count+1):
-         possible_hand_values[index] += (ace_count-index)*1 + index*11
-      best_hand = min(possible_hand_values)
-      for index in range(1,ace_count+1):
-         if possible_hand_values[index] <= 21:
-            best_hand = possible_hand_values[index]
-      return best_hand
-
-
-def gameon(player):
+def gameon(name):
    choice = 'wrong'
    # hit requests an extra card and stay the opposite
    while choice not in ['y','n']:
-      choice = input(f'Does {player.name} want to keep losing money? Yes(y) or No(n): ')
+      choice = input(f'Does {name} want to keep losing money? Yes(y) or No(n): ')
       if choice not in ['y','n']:
          print('Pick a valid choice. Please try again.')
 
